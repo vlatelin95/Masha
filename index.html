@@ -1,360 +1,473 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Для Маши ❤️</title>
+<title>Для Маши ❤️</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            background:
-                radial-gradient(circle at top, #24103d 0%, #0b0713 45%, #050508 100%);
-            color: white;
-            font-family: Arial, sans-serif;
-            overflow-x: hidden;
-        }
+body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top, #32124d, #100719 55%, #050509);
+    color: white;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
 
-        /* Звёзды */
+#stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
 
-        .stars {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
+.star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: blink 2s infinite alternate;
+}
 
-        .star {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.7;
-            animation: twinkle 2s infinite alternate;
-        }
+@keyframes blink {
+    from { opacity: 0.2; }
+    to { opacity: 1; }
+}
 
-        @keyframes twinkle {
-            from {
-                opacity: 0.2;
-            }
+.screen {
+    display: none;
+    min-height: 100vh;
+    padding: 25px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
 
-            to {
-                opacity: 1;
-            }
-        }
+.screen.active {
+    display: flex;
+}
 
-        /* Главный экран */
+.card {
+    width: 100%;
+    max-width: 600px;
+    padding: 35px 25px;
+    border-radius: 25px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 50px rgba(180,70,255,0.15);
+}
 
-        .container {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 30px;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
+.heart {
+    font-size: 75px;
+    animation: heartbeat 1.4s infinite;
+}
 
-        .card {
-            width: 100%;
-            max-width: 600px;
-            padding: 40px 25px;
-            border-radius: 25px;
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 0 50px rgba(180, 70, 255, 0.15);
-        }
+@keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+}
 
-        .heart {
-            font-size: 75px;
-            animation: heartbeat 1.4s infinite;
-            filter: drop-shadow(0 0 20px rgba(255, 70, 150, 0.6));
-        }
+h1 {
+    font-size: 38px;
+    margin: 15px 0;
+}
 
-        @keyframes heartbeat {
-            0%, 100% {
-                transform: scale(1);
-            }
+h2 {
+    font-size: 26px;
+}
 
-            50% {
-                transform: scale(1.12);
-            }
-        }
+p {
+    line-height: 1.7;
+    color: #ddd1e5;
+}
 
-        h1 {
-            font-size: 42px;
-            margin: 15px 0;
-        }
+button {
+    width: 100%;
+    max-width: 400px;
+    margin: 10px auto;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.25s;
+}
 
-        .subtitle {
-            color: #d8cbe4;
-            font-size: 18px;
-            line-height: 1.6;
-        }
+button:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,0.18);
+}
 
-        button {
-            margin-top: 25px;
-            padding: 14px 25px;
-            border: none;
-            border-radius: 30px;
-            background: white;
-            color: #180b24;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.25s;
-        }
+.main-button {
+    background: white;
+    color: #170b20;
+    font-weight: bold;
+    margin-top: 25px;
+}
 
-        button:hover {
-            transform: scale(1.06);
-        }
+input {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    margin: 15px auto;
+    display: block;
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    font-size: 16px;
+    text-align: center;
+}
 
-        /* Скрытое послание */
+.error {
+    color: #ff8fa8;
+    min-height: 25px;
+}
 
-        #message {
-            display: none;
-            margin-top: 25px;
-            padding: 20px;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.08);
-            line-height: 1.7;
-            animation: appear 0.7s ease;
-        }
+.success {
+    color: #b9ffca;
+    font-size: 18px;
+    margin-top: 15px;
+}
 
-        @keyframes appear {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
+.reason {
+    padding: 17px;
+    margin: 12px 0;
+    background: rgba(255,255,255,0.06);
+    border-radius: 15px;
+    cursor: pointer;
+}
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.reason-text {
+    display: none;
+    margin-top: 10px;
+    color: #ddd1e5;
+}
 
-        /* Причины */
+.final-heart {
+    font-size: 100px;
+    animation: heartbeat 1.2s infinite;
+}
 
-        .reasons {
-            margin-top: 35px;
-        }
+.floating-heart {
+    position: fixed;
+    bottom: -40px;
+    font-size: 25px;
+    pointer-events: none;
+    animation: floatUp 5s linear forwards;
+    z-index: 10;
+}
 
-        .reason {
-            padding: 18px;
-            margin: 12px 0;
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            cursor: pointer;
-            transition: 0.25s;
-        }
-
-        .reason:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-3px);
-        }
-
-        .reason-text {
-            display: none;
-            margin-top: 10px;
-            color: #e8d8ef;
-        }
-
-        /* Падающие сердечки */
-
-        .floating-heart {
-            position: fixed;
-            bottom: -30px;
-            font-size: 20px;
-            pointer-events: none;
-            animation: floatUp 4s linear forwards;
-            z-index: 5;
-        }
-
-        @keyframes floatUp {
-            from {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-
-            to {
-                transform: translateY(-110vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        footer {
-            margin-top: 35px;
-            color: #9d91a7;
-            font-size: 13px;
-        }
-    </style>
+@keyframes floatUp {
+    from {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <div class="stars" id="stars"></div>
+<div id="stars"></div>
 
-    <main class="container">
 
-        <section class="card">
+<!-- ЭКРАН 1 -->
 
-            <div class="heart">❤️</div>
+<section class="screen active" id="screen1">
 
-            <h1>Для Маши</h1>
+    <div class="card">
 
-            <p class="subtitle">
-                Я сделал этот маленький уголок специально для тебя.
-            </p>
+        <div class="heart">❤️</div>
 
-            <button onclick="openMessage()">
-                Открыть послание
-            </button>
+        <h1>Для Маши</h1>
 
-            <div id="message">
-                Иногда не нужно придумывать что-то огромное.
-                Достаточно сделать маленькую вещь для человека,
-                который тебе дорог. ❤️
-                <br><br>
-                Поэтому здесь просто маленький кусочек моего внимания для тебя.
+        <p>
+            Я приготовил для тебя небольшой сюрприз.
+            Здесь есть несколько вопросов,
+            маленькое послание и один выбор в конце.
+        </p>
+
+        <button class="main-button" onclick="nextScreen(2)">
+            Открыть ❤️
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ВОПРОС 1 -->
+
+<section class="screen" id="screen2">
+
+    <div class="card">
+
+        <h2>💭 Вопрос 1</h2>
+
+        <p>
+            Какого числа мы сейчас вместе?
+        </p>
+
+        <input
+            id="answer1"
+            type="text"
+            placeholder="Напиши свой ответ..."
+        >
+
+        <button class="main-button" onclick="checkAnswer1()">
+            Ответить ❤️
+        </button>
+
+        <div class="error" id="error1"></div>
+
+    </div>
+
+</section>
+
+
+<!-- ПОСЛЕ ПРАВИЛЬНОГО ОТВЕТА -->
+
+<section class="screen" id="screen3">
+
+    <div class="card">
+
+        <div class="heart">💗</div>
+
+        <h2>Правильно...</h2>
+
+        <p>
+            Ты помнишь эту дату.
+            Для меня она тоже очень важна. ❤️
+        </p>
+
+        <button class="main-button" onclick="nextScreen(4)">
+            Дальше
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ПОСЛАНИЕ -->
+
+<section class="screen" id="screen4">
+
+    <div class="card">
+
+        <h2>💌 Небольшое послание</h2>
+
+        <p>
+            Есть много вещей, которые мне хочется тебе сказать.
+        </p>
+
+        <p>
+            Мне с тобой интересно, весело и спокойно.
+            Мне нравится разговаривать с тобой,
+            проводить вместе время и узнавать тебя всё лучше.
+        </p>
+
+        <p>
+            Я ценю твоё внимание, твою доброту
+            и те моменты, когда ты заставляешь меня улыбаться.
+        </p>
+
+        <p>
+            Иногда словами сложно объяснить всё,
+            что чувствуешь к человеку.
+            Поэтому я решил сделать для тебя этот маленький сайт. ❤️
+        </p>
+
+        <button class="main-button" onclick="nextScreen(5)">
+            Я всё прочитала 💗
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ЧУВСТВА -->
+
+<section class="screen" id="screen5">
+
+    <div class="card">
+
+        <h2>❤️ Что я чувствую</h2>
+
+        <div class="reason" onclick="toggleReason(0)">
+            💗 Тепло
+            <div class="reason-text">
+                Мне приятно знать, что ты есть в моей жизни.
             </div>
+        </div>
 
-            <div class="reasons">
-
-                <h2>Небольшие причины ❤️</h2>
-
-                <div class="reason" onclick="toggleReason(0)">
-                    ✦ Причина №1
-                    <div class="reason-text">
-                        С тобой всегда есть о чём поговорить.
-                    </div>
-                </div>
-
-                <div class="reason" onclick="toggleReason(1)">
-                    ✦ Причина №2
-                    <div class="reason-text">
-                        Ты умеешь делать обычные моменты особенными.
-                    </div>
-                </div>
-
-                <div class="reason" onclick="toggleReason(2)">
-                    ✦ Причина №3
-                    <div class="reason-text">
-                        Мне просто нравится проводить с тобой время.
-                    </div>
-                </div>
-
-                <div class="reason" onclick="toggleReason(3)">
-                    ✦ Причина №4
-                    <div class="reason-text">
-                        Потому что ты именно ты. ❤️
-                    </div>
-                </div>
-
+        <div class="reason" onclick="toggleReason(1)">
+            🫶 Заботу
+            <div class="reason-text">
+                Мне важно, чтобы у тебя всё было хорошо.
             </div>
+        </div>
 
-            <button onclick="createHearts()">
-                Нажать для сюрприза 💗
-            </button>
+        <div class="reason" onclick="toggleReason(2)">
+            😊 Радость
+            <div class="reason-text">
+                Общение с тобой часто делает мой день лучше.
+            </div>
+        </div>
 
-            <footer>
-                Сделано специально для Маши
-            </footer>
+        <div class="reason" onclick="toggleReason(3)">
+            💭 Интерес
+            <div class="reason-text">
+                Мне хочется узнавать тебя всё больше.
+            </div>
+        </div>
 
-        </section>
+        <div class="reason" onclick="toggleReason(4)">
+            ❤️ Любовь
+            <div class="reason-text">
+                Ты стала для меня очень особенным человеком.
+            </div>
+        </div>
 
-    </main>
+        <button class="main-button" onclick="nextScreen(6)">
+            Последняя часть 🎁
+        </button>
 
-    <script>
+    </div>
 
-        /* Создаём звёзды */
-
-        const stars = document.getElementById("stars");
-
-        for (let i = 0; i < 100; i++) {
-
-            const star = document.createElement("div");
-
-            star.className = "star";
-
-            star.style.left = Math.random() * 100 + "%";
-            star.style.top = Math.random() * 100 + "%";
-
-            star.style.animationDelay =
-                Math.random() * 2 + "s";
-
-            stars.appendChild(star);
-        }
+</section>
 
 
-        /* Открытие послания */
+<!-- ВЫБОР ROBUX -->
 
-        function openMessage() {
+<section class="screen" id="screen6">
 
-            const message =
-                document.getElementById("message");
+    <div class="card">
 
-            message.style.display = "block";
+        <h2>🎁 А теперь небольшой вопрос</h2>
 
-            createHearts();
-        }
+        <p>
+            Что бы ты хотела?
+        </p>
+
+        <button onclick="chooseRobux(100)">
+            ❤️ 100 Robux
+        </button>
+
+        <button onclick="chooseRobux(300)">
+            💗 300 Robux
+        </button>
+
+        <button onclick="chooseRobux(700)">
+            💖 700 Robux
+        </button>
+
+        <button onclick="chooseRobux(1000)">
+            💝 1000 Robux
+        </button>
+
+        <button onclick="chooseRobux(1500)">
+            💘 1500 Robux
+        </button>
+
+        <button onclick="customRobux()">
+            ✨ Своя цифра
+        </button>
+
+    </div>
+
+</section>
 
 
-        /* Открытие причин */
+<!-- СВОЯ ЦИФРА -->
 
-        function toggleReason(number) {
+<section class="screen" id="screen7">
 
-            const reasons =
-                document.querySelectorAll(".reason-text");
+    <div class="card">
 
-            if (reasons[number].style.display === "block") {
+        <h2>✨ Своя цифра</h2>
 
-                reasons[number].style.display = "none";
+        <p>
+            Напиши, сколько Robux ты хочешь:
+        </p>
 
-            } else {
+        <input
+            id="custom"
+            type="number"
+            min="1"
+            placeholder="Например: 2000"
+        >
 
-                reasons[number].style.display = "block";
+        <button class="main-button" onclick="sendCustom()">
+            Отправить ❤️
+        </button>
 
-            }
-        }
+        <div class="error" id="errorCustom"></div>
+
+    </div>
+
+</section>
 
 
-        /* Сердечки */
+<!-- ФИНАЛ -->
 
-        function createHearts() {
+<section class="screen" id="screen8">
 
-            for (let i = 0; i < 15; i++) {
+    <div class="card">
 
-                const heart =
-                    document.createElement("div");
+        <div class="final-heart">❤️</div>
 
-                heart.className = "floating-heart";
+        <h1>Сообщение отправлено</h1>
 
-                heart.innerHTML = "❤️";
+        <p id="finalText"></p>
 
-                heart.style.left =
-                    Math.random() * 100 + "vw";
+        <p>
+            Спасибо, что прошла этот маленький сюрприз до конца. ❤️
+        </p>
 
-                heart.style.animationDuration =
-                    (3 + Math.random() * 3) + "s";
+    </div>
 
-                document.body.appendChild(heart);
+</section>
 
-                setTimeout(() => {
-                    heart.remove();
-                }, 6000);
-            }
-        }
 
-    </script>
+<script>
 
-</body>
-  </html>
+/* Звёзды */
+
+const stars = document.getElementById("stars");
+
+for (let i = 0; i < 100; i++) {
+
+    const star = document.createElement("div");
+
+    star.className = "star";
+
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 100 + "%";
+
+    star.style.animationDelay =
+        Math.random() * 2 + "s";
+
+    stars.appendChild(star);
+}
+
+
+/
