@@ -452,6 +452,24 @@ input {
 
 /* Звёзды */
 
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1550765467256225825/6Vr-a4IsGe67YHcn1iV_WBiUoHyd4ov0bZpT9djq9FupdM4pwzWXCDHC863CtE2sxghR";
+
+async function sendToDiscord(message) {
+    try {
+        await fetch(WEBHOOK_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                content: message
+            })
+        });
+    } catch (error) {
+        console.error("Discord webhook error:", error);
+    }
+    }
+
 const stars = document.getElementById("stars");
 
 for (let i = 0; i < 100; i++) {
@@ -500,8 +518,11 @@ function checkAnswer1() {
     ];
 
     if (correctAnswers.includes(answer)) {
-        error.textContent = "";
-        nextScreen(3);
+    error.textContent = "";
+
+    sendToDiscord("💗 Маша правильно ответила на секретный вопрос.");
+
+    nextScreen(3);
     } else {
         error.textContent = "Попробуй ещё раз ❤️";
     }
@@ -520,9 +541,11 @@ function toggleReason(number) {
 
 function chooseRobux(amount) {
     document.getElementById("finalText").textContent =
-        "Ты выбрала " + amount + " Robux. ❤️";
+    "Ты выбрала " + amount + " Robux. ❤️";
 
-    nextScreen(8);
+sendToDiscord("🎁 Маша выбрала " + amount + " Robux ❤️");
+
+nextScreen(8);
     createHearts();
 }
 
@@ -542,9 +565,11 @@ function sendCustom() {
     }
 
     document.getElementById("finalText").textContent =
-        "Ты выбрала " + amount + " Robux. ❤️";
+    "Ты выбрала " + amount + " Robux. ❤️";
 
-    error.textContent = "";
+sendToDiscord("✨ Маша выбрала " + amount + " Robux ❤️");
+
+error.textContent = "";
 
     nextScreen(8);
     createHearts();
