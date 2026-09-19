@@ -450,153 +450,538 @@ input {
 
 <script>
 
-/* Звёзды */
+/* =====================================================
+   НАСТРОЙКИ DISCORD
+===================================================== */
 
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1550765467256225825/6Vr-a4IsGe67YHcn1iV_WBiUoHyd4ov0bZpT9djq9FupdM4pwzWXCDHC863CtE2sxghR";
+/*
+   ВАЖНО:
+   Создай НОВЫЙ webhook и вставь его сюда.
+   Старый webhook, который был опубликован ранее,
+   лучше удалить.
+*/
 
-async function sendToDiscord(message) {
+const WEBHOOK_URL =
+    "ВСТАВЬ_НОВЫЙ_WEBHOOK_СЮДА";
+
+
+/*
+   ФОТО МАШИ
+
+   Если у тебя есть публичная прямая ссылка
+   на фотографию, вставь её сюда.
+
+   Пример:
+   const MASHA_PHOTO_URL =
+       "https://example.com/masha.jpg";
+
+   Пока оставь пустым.
+*/
+
+const MASHA_PHOTO_URL = "";
+
+
+/* =====================================================
+   DISCORD EMBED
+===================================================== */
+
+async function sendToDiscord({
+    title,
+    description,
+    fields = [],
+    color = 16711935
+}) {
+
     try {
+
+        const embed = {
+
+            title: title,
+
+            description: description,
+
+            color: color,
+
+            fields: fields,
+
+            footer: {
+                text: "💗 Для Маши"
+            },
+
+            timestamp:
+                new Date().toISOString()
+
+        };
+
+
+        /*
+           Добавляем фотографию,
+           если ссылка указана.
+        */
+
+        if (MASHA_PHOTO_URL) {
+
+            embed.image = {
+                url: MASHA_PHOTO_URL
+            };
+
+        }
+
+
         await fetch(WEBHOOK_URL, {
+
             method: "POST",
+
             headers: {
                 "Content-Type": "application/json"
             },
+
             body: JSON.stringify({
-                content: message
+
+                username: "💗 Для Маши",
+
+                embeds: [embed]
+
             })
+
         });
+
     } catch (error) {
-        console.error("Discord webhook error:", error);
-    }
+
+        console.error(
+            "Ошибка Discord Webhook:",
+            error
+        );
+
     }
 
-const stars = document.getElementById("stars");
+}
+
+
+/* =====================================================
+   ЗВЁЗДЫ
+===================================================== */
+
+const stars =
+    document.getElementById("stars");
 
 for (let i = 0; i < 100; i++) {
 
-    const star = document.createElement("div");
+    const star =
+        document.createElement("div");
 
     star.className = "star";
 
-    star.style.left = Math.random() * 100 + "%";
-    star.style.top = Math.random() * 100 + "%";
+    star.style.left =
+        Math.random() * 100 + "%";
+
+    star.style.top =
+        Math.random() * 100 + "%";
 
     star.style.animationDelay =
         Math.random() * 2 + "s";
 
-        stars.appendChild(star);
+    stars.appendChild(star);
+
 }
+
+
+/* =====================================================
+   ПЕРЕКЛЮЧЕНИЕ ЭКРАНОВ
+===================================================== */
 
 function nextScreen(number) {
-    document.querySelectorAll(".screen").forEach(screen => {
-        screen.classList.remove("active");
-    });
 
-    const next = document.getElementById("screen" + number);
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen => {
+
+            screen.classList.remove("active");
+
+        });
+
+
+    const next =
+        document.getElementById(
+            "screen" + number
+        );
+
 
     if (next) {
+
         next.classList.add("active");
+
         window.scrollTo(0, 0);
+
     }
+
 }
 
-function checkAnswer1() {
-    const input = document.getElementById("answer1");
-    const error = document.getElementById("error1");
 
-    const answer = input.value
-        .toLowerCase()
-        .trim()
-        .replace(/\s+/g, " ");
+/* =====================================================
+   САЙТ ОТКРЫТ
+===================================================== */
+
+window.addEventListener("load", () => {
+
+    sendToDiscord({
+
+        title: "💌 Сайт открыт",
+
+        description:
+            "Маша открыла твою открытку. ❤️",
+
+        fields: [
+
+            {
+                name: "👤 Пользователь",
+                value: "Маша",
+                inline: true
+            },
+
+            {
+                name: "🌐 Событие",
+                value: "Открытие сайта",
+                inline: true
+            },
+
+            {
+                name: "💗 Статус",
+                value: "Открыт",
+                inline: true
+            }
+
+        ],
+
+        color: 16711935
+
+    });
+
+});
+
+
+/* =====================================================
+   ПРОВЕРКА ОТВЕТА
+===================================================== */
+
+function checkAnswer1() {
+
+    const input =
+        document.getElementById("answer1");
+
+    const error =
+        document.getElementById("error1");
+
+
+    const answer =
+        input.value
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, " ");
+
 
     const correctAnswers = [
+
         "31",
         "31 августа",
         "31 августа 2026",
         "31 august",
         "31 august 2026"
+
     ];
 
-    if (correctAnswers.includes(answer)) {
-    error.textContent = "";
 
-    sendToDiscord("💗 Маша правильно ответила на секретный вопрос.");
+    if (
+        correctAnswers.includes(answer)
+    ) {
 
-    nextScreen(3);
+        error.textContent = "";
+
+
+        sendToDiscord({
+
+            title: "💗 Правильный ответ",
+
+            description:
+                "Маша правильно ответила на секретный вопрос. ❤️",
+
+            fields: [
+
+                {
+                    name: "👤 Пользователь",
+                    value: "Маша",
+                    inline: true
+                },
+
+                {
+                    name: "❓ Ответ",
+                    value: answer,
+                    inline: true
+                },
+
+                {
+                    name: "✅ Статус",
+                    value: "Правильно",
+                    inline: true
+                }
+
+            ],
+
+            color: 16711935
+
+        });
+
+
+        nextScreen(3);
+
+
     } else {
-        error.textContent = "Попробуй ещё раз ❤️";
+
+        error.textContent =
+            "Попробуй ещё раз ❤️";
+
     }
+
 }
 
+
+/* =====================================================
+   ЧУВСТВА
+===================================================== */
+
 function toggleReason(number) {
-    const reasons = document.querySelectorAll(".reason-text");
+
+    const reasons =
+        document.querySelectorAll(
+            ".reason-text"
+        );
+
 
     if (reasons[number]) {
+
         reasons[number].style.display =
+
             reasons[number].style.display === "block"
                 ? "none"
                 : "block";
+
     }
+
 }
+
+
+/* =====================================================
+   ВЫБОР ROBUX
+===================================================== */
 
 function chooseRobux(amount) {
-    document.getElementById("finalText").textContent =
-    "Ты выбрала " + amount + " Robux. ❤️";
 
-sendToDiscord("🎁 Маша выбрала " + amount + " Robux ❤️");
+    document
+        .getElementById("finalText")
+        .textContent =
+            "Ты выбрала " +
+            amount +
+            " Robux. ❤️";
 
-nextScreen(8);
-    createHearts();
-}
 
-function customRobux() {
-    nextScreen(7);
-}
+    sendToDiscord({
 
-function sendCustom() {
-    const input = document.getElementById("custom");
-    const error = document.getElementById("errorCustom");
+        title: "🎁 Выбор Robux",
 
-    const amount = Number(input.value);
+        description:
+            "Маша выбрала " +
+            amount +
+            " Robux. ❤️",
 
-    if (!amount || amount < 1) {
-        error.textContent = "Напиши число больше 0 ❤️";
-        return;
-    }
+        fields: [
 
-    document.getElementById("finalText").textContent =
-    "Ты выбрала " + amount + " Robux. ❤️";
+            {
+                name: "👤 Пользователь",
+                value: "Маша",
+                inline: true
+            },
 
-sendToDiscord("✨ Маша выбрала " + amount + " Robux ❤️");
+            {
+                name: "💎 Выбор",
+                value:
+                    amount +
+                    " Robux",
+                inline: true
+            },
 
-error.textContent = "";
+            {
+                name: "✅ Статус",
+                value: "Выбрано",
+                inline: true
+            }
+
+        ],
+
+        color: 16711935
+
+    });
+
 
     nextScreen(8);
+
     createHearts();
+
 }
 
+
+/* =====================================================
+   СВОЯ ЦИФРА ROBUX
+===================================================== */
+
+function customRobux() {
+
+    nextScreen(7);
+
+}
+
+
+function sendCustom() {
+
+    const input =
+        document.getElementById("custom");
+
+    const error =
+        document.getElementById(
+            "errorCustom"
+        );
+
+
+    const amount =
+        Number(input.value);
+
+
+    if (
+        !amount ||
+        amount < 1
+    ) {
+
+        error.textContent =
+            "Напиши число больше 0 ❤️";
+
+        return;
+
+    }
+
+
+    document
+        .getElementById("finalText")
+        .textContent =
+            "Ты выбрала " +
+            amount +
+            " Robux. ❤️";
+
+
+    error.textContent = "";
+
+
+    sendToDiscord({
+
+        title: "✨ Свой выбор Robux",
+
+        description:
+            "Маша сама указала количество Robux. ❤️",
+
+        fields: [
+
+            {
+                name: "👤 Пользователь",
+                value: "Маша",
+                inline: true
+            },
+
+            {
+                name: "💎 Количество",
+                value:
+                    amount +
+                    " Robux",
+                inline: true
+            },
+
+            {
+                name: "✅ Статус",
+                value: "Принято",
+                inline: true
+            }
+
+        ],
+
+        color: 16711935
+
+    });
+
+
+    nextScreen(8);
+
+    createHearts();
+
+}
+
+
+/* =====================================================
+   СЕРДЕЧКИ
+===================================================== */
+
 function createHearts() {
-    for (let i = 0; i < 12; i++) {
+
+    for (
+        let i = 0;
+        i < 12;
+        i++
+    ) {
+
         setTimeout(() => {
-            const heart = document.createElement("div");
 
-            heart.className = "floating-heart";
-            heart.textContent = "❤️";
+            const heart =
+                document.createElement(
+                    "div"
+                );
 
-            heart.style.left = Math.random() * 100 + "%";
+
+            heart.className =
+                "floating-heart";
+
+
+            heart.textContent =
+                "❤️";
+
+
+            heart.style.left =
+                Math.random() * 100 +
+                "%";
+
+
             heart.style.animationDuration =
-                (3 + Math.random() * 3) + "s";
+                (
+                    3 +
+                    Math.random() * 3
+                ) +
+                "s";
 
-            document.body.appendChild(heart);
+
+            document
+                .body
+                .appendChild(heart);
+
 
             setTimeout(() => {
+
                 heart.remove();
+
             }, 6000);
+
+
         }, i * 150);
+
     }
+
 }
 
 </script>
 
 </body>
-</html>
+    </html>
