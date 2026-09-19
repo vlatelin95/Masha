@@ -11,20 +11,53 @@
     box-sizing: border-box;
 }
 
+html,
 body {
     margin: 0;
+    min-height: 100%;
+}
+
+body {
     min-height: 100vh;
-    background:
-        radial-gradient(circle at top, #32124d, #100719 55%, #050509);
     color: white;
     font-family: Arial, sans-serif;
     overflow-x: hidden;
+    background: #050509;
 }
+
+/* =====================================================
+   ФОТО МАШИ НА ЗАДНЕМ ФОНЕ
+===================================================== */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 20, 0.38),
+            rgba(0, 0, 20, 0.38)
+        ),
+        url("https://raw.githubusercontent.com/vlatelin95/Masha/refs/heads/main/file_00000000ac048210aa568d278e373238.png");
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* =====================================================
+   ЗВЁЗДЫ
+===================================================== */
 
 #stars {
     position: fixed;
     inset: 0;
     pointer-events: none;
+    z-index: 2;
 }
 
 .star {
@@ -38,35 +71,65 @@ body {
 }
 
 @keyframes blink {
-    from { opacity: 0.2; }
-    to { opacity: 1; }
+    from {
+        opacity: 0.2;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
+
+/* =====================================================
+   ЭКРАНЫ
+===================================================== */
 
 .screen {
     display: none;
+
     min-height: 100vh;
     padding: 25px;
+
     align-items: center;
     justify-content: center;
+
     text-align: center;
+
     position: relative;
-    z-index: 2;
+    z-index: 3;
 }
 
 .screen.active {
     display: flex;
 }
 
+/* =====================================================
+   КАРТОЧКА
+===================================================== */
+
 .card {
     width: 100%;
     max-width: 600px;
+
     padding: 35px 25px;
+
     border-radius: 25px;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.12);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 0 50px rgba(180,70,255,0.15);
+
+    background: rgba(5, 5, 20, 0.58);
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 0 50px rgba(180, 70, 255, 0.2),
+        0 15px 50px rgba(0, 0, 0, 0.35);
 }
+
+/* =====================================================
+   ТЕКСТ
+===================================================== */
 
 .heart {
     font-size: 75px;
@@ -74,8 +137,14 @@ body {
 }
 
 @keyframes heartbeat {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.12); }
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.12);
+    }
 }
 
 h1 {
@@ -89,47 +158,75 @@ h2 {
 
 p {
     line-height: 1.7;
-    color: #ddd1e5;
+    color: #eee8f5;
 }
+
+/* =====================================================
+   КНОПКИ
+===================================================== */
 
 button {
     width: 100%;
     max-width: 400px;
+
     margin: 10px auto;
+
     padding: 15px 20px;
+
     border: none;
     border-radius: 15px;
-    background: rgba(255,255,255,0.1);
+
+    background: rgba(255, 255, 255, 0.12);
+
     color: white;
+
     font-size: 16px;
+
     cursor: pointer;
+
     transition: 0.25s;
 }
 
 button:hover {
     transform: translateY(-3px);
-    background: rgba(255,255,255,0.18);
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .main-button {
     background: white;
     color: #170b20;
+
     font-weight: bold;
+
     margin-top: 25px;
 }
+
+/* =====================================================
+   INPUT
+===================================================== */
 
 input {
     width: 100%;
     max-width: 400px;
+
     padding: 15px;
     margin: 15px auto;
+
     display: block;
+
     border: none;
     outline: none;
+
     border-radius: 12px;
+
     font-size: 16px;
+
     text-align: center;
 }
+
+/* =====================================================
+   ОШИБКИ
+===================================================== */
 
 .error {
     color: #ff8fa8;
@@ -142,42 +239,115 @@ input {
     margin-top: 15px;
 }
 
+/* =====================================================
+   ПРИЧИНЫ / ЧУВСТВА
+===================================================== */
+
 .reason {
     padding: 17px;
     margin: 12px 0;
-    background: rgba(255,255,255,0.06);
+
+    background: rgba(255, 255, 255, 0.08);
+
     border-radius: 15px;
+
     cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.reason:hover {
+    background: rgba(255, 255, 255, 0.14);
 }
 
 .reason-text {
     display: none;
+
     margin-top: 10px;
+
     color: #ddd1e5;
 }
+
+/* =====================================================
+   ФИНАЛ
+===================================================== */
 
 .final-heart {
     font-size: 100px;
     animation: heartbeat 1.2s infinite;
 }
 
+/* =====================================================
+   ПЛАВАЮЩИЕ СЕРДЕЧКИ
+===================================================== */
+
 .floating-heart {
     position: fixed;
+
     bottom: -40px;
+
     font-size: 25px;
+
     pointer-events: none;
+
     animation: floatUp 5s linear forwards;
+
     z-index: 10;
 }
 
 @keyframes floatUp {
     from {
-        transform: translateY(0) rotate(0deg);
+        transform:
+            translateY(0)
+            rotate(0deg);
+
         opacity: 1;
     }
+
     to {
-        transform: translateY(-110vh) rotate(360deg);
+        transform:
+            translateY(-110vh)
+            rotate(360deg);
+
         opacity: 0;
+    }
+}
+
+/* =====================================================
+   МОБИЛЬНАЯ ВЕРСИЯ
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .screen {
+        padding: 15px;
+    }
+
+    .card {
+        padding: 28px 18px;
+
+        background:
+            rgba(5, 5, 20, 0.62);
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    h2 {
+        font-size: 23px;
+    }
+
+    p {
+        font-size: 15px;
+    }
+
+    .heart {
+        font-size: 65px;
+    }
+
+    .final-heart {
+        font-size: 80px;
     }
 }
 </style>
@@ -188,7 +358,9 @@ input {
 <div id="stars"></div>
 
 
-<!-- ЭКРАН 1 -->
+<!-- =====================================================
+     ЭКРАН 1
+===================================================== -->
 
 <section class="screen active" id="screen1">
 
@@ -204,7 +376,10 @@ input {
             маленькое послание и один выбор в конце.
         </p>
 
-        <button class="main-button" onclick="nextScreen(2)">
+        <button
+            class="main-button"
+            onclick="nextScreen(2)"
+        >
             Открыть ❤️
         </button>
 
@@ -213,7 +388,9 @@ input {
 </section>
 
 
-<!-- ВОПРОС 1 -->
+<!-- =====================================================
+     ВОПРОС 1
+===================================================== -->
 
 <section class="screen" id="screen2">
 
@@ -231,18 +408,26 @@ input {
             placeholder="Напиши свой ответ..."
         >
 
-        <button class="main-button" onclick="checkAnswer1()">
+        <button
+            class="main-button"
+            onclick="checkAnswer1()"
+        >
             Ответить ❤️
         </button>
 
-        <div class="error" id="error1"></div>
+        <div
+            class="error"
+            id="error1"
+        ></div>
 
     </div>
 
 </section>
 
 
-<!-- ПОСЛЕ ПРАВИЛЬНОГО ОТВЕТА -->
+<!-- =====================================================
+     ПОСЛЕ ПРАВИЛЬНОГО ОТВЕТА
+===================================================== -->
 
 <section class="screen" id="screen3">
 
@@ -257,7 +442,10 @@ input {
             Для меня она тоже очень важна. ❤️
         </p>
 
-        <button class="main-button" onclick="nextScreen(4)">
+        <button
+            class="main-button"
+            onclick="nextScreen(4)"
+        >
             Дальше
         </button>
 
@@ -266,7 +454,9 @@ input {
 </section>
 
 
-<!-- ПОСЛАНИЕ -->
+<!-- =====================================================
+     ПОСЛАНИЕ
+===================================================== -->
 
 <section class="screen" id="screen4">
 
@@ -295,7 +485,10 @@ input {
             Поэтому я решил сделать для тебя этот маленький сайт. ❤️
         </p>
 
-        <button class="main-button" onclick="nextScreen(5)">
+        <button
+            class="main-button"
+            onclick="nextScreen(5)"
+        >
             Я всё прочитала 💗
         </button>
 
@@ -304,7 +497,9 @@ input {
 </section>
 
 
-<!-- ЧУВСТВА -->
+<!-- =====================================================
+     ЧУВСТВА
+===================================================== -->
 
 <section class="screen" id="screen5">
 
@@ -312,42 +507,65 @@ input {
 
         <h2>❤️ Что я чувствую</h2>
 
-        <div class="reason" onclick="toggleReason(0)">
+        <div
+            class="reason"
+            onclick="toggleReason(0)"
+        >
             💗 Тепло
+
             <div class="reason-text">
                 Мне приятно знать, что ты есть в моей жизни.
             </div>
         </div>
 
-        <div class="reason" onclick="toggleReason(1)">
+        <div
+            class="reason"
+            onclick="toggleReason(1)"
+        >
             🫶 Заботу
+
             <div class="reason-text">
                 Мне важно, чтобы у тебя всё было хорошо.
             </div>
         </div>
 
-        <div class="reason" onclick="toggleReason(2)">
+        <div
+            class="reason"
+            onclick="toggleReason(2)"
+        >
             😊 Радость
+
             <div class="reason-text">
                 Общение с тобой часто делает мой день лучше.
             </div>
         </div>
 
-        <div class="reason" onclick="toggleReason(3)">
+        <div
+            class="reason"
+            onclick="toggleReason(3)"
+        >
             💭 Интерес
+
             <div class="reason-text">
                 Мне хочется узнавать тебя всё больше.
             </div>
         </div>
 
-        <div class="reason" onclick="toggleReason(4)">
+        <div
+            class="reason"
+            onclick="toggleReason(4)"
+        >
             ❤️ Любовь
+
             <div class="reason-text">
                 Ты стала для меня очень особенным человеком.
             </div>
         </div>
 
-        <button class="main-button" onclick="nextScreen(6)">
+        <button
+            class="main-button"
+            onclick="nextScreen(6)"
+        >
             Последняя часть 🎁
         </button>
 
@@ -356,7 +574,9 @@ input {
 </section>
 
 
-<!-- ВЫБОР ROBUX -->
+<!-- =====================================================
+     ROBUX
+===================================================== -->
 
 <section class="screen" id="screen6">
 
@@ -397,7 +617,9 @@ input {
 </section>
 
 
-<!-- СВОЯ ЦИФРА -->
+<!-- =====================================================
+     СВОЯ ЦИФРА
+===================================================== -->
 
 <section class="screen" id="screen7">
 
@@ -416,26 +638,38 @@ input {
             placeholder="Например: 2000"
         >
 
-        <button class="main-button" onclick="sendCustom()">
+        <button
+            class="main-button"
+            onclick="sendCustom()"
+        >
             Отправить ❤️
         </button>
 
-        <div class="error" id="errorCustom"></div>
+        <div
+            class="error"
+            id="errorCustom"
+        ></div>
 
     </div>
 
 </section>
 
 
-<!-- ФИНАЛ -->
+<!-- =====================================================
+     ФИНАЛ
+===================================================== -->
 
 <section class="screen" id="screen8">
 
     <div class="card">
 
-        <div class="final-heart">❤️</div>
+        <div class="final-heart">
+            ❤️
+        </div>
 
-        <h1>Сообщение отправлено</h1>
+        <h1>
+            Сообщение отправлено
+        </h1>
 
         <p id="finalText"></p>
 
@@ -455,10 +689,9 @@ input {
 ===================================================== */
 
 /*
-   ВАЖНО:
-   Создай НОВЫЙ webhook и вставь его сюда.
-   Старый webhook, который был опубликован ранее,
-   лучше удалить.
+   ВСТАВЬ СЮДА НОВЫЙ WEBHOOK.
+
+   Старый webhook больше не используй.
 */
 
 const WEBHOOK_URL =
@@ -468,17 +701,12 @@ const WEBHOOK_URL =
 /*
    ФОТО МАШИ
 
-   Если у тебя есть публичная прямая ссылка
-   на фотографию, вставь её сюда.
-
-   Пример:
-   const MASHA_PHOTO_URL =
-       "https://example.com/masha.jpg";
-
-   Пока оставь пустым.
+   Это же фото используется
+   как фон сайта и как картинка Discord Embed.
 */
 
-const MASHA_PHOTO_URL = "https://raw.githubusercontent.com/vlatelin95/Masha/refs/heads/main/file_00000000ac048210aa568d278e373238.png";
+const MASHA_PHOTO_URL =
+    "https://raw.githubusercontent.com/vlatelin95/Masha/refs/heads/main/file_00000000ac048210aa568d278e373238.png";
 
 
 /* =====================================================
@@ -491,6 +719,17 @@ async function sendToDiscord({
     fields = [],
     color = 16711935
 }) {
+
+    if (
+        !WEBHOOK_URL ||
+        WEBHOOK_URL === "ВСТАВЬ_НОВЫЙ_WEBHOOK_СЮДА"
+    ) {
+        console.log(
+            "Discord webhook не настроен."
+        );
+
+        return;
+    }
 
     try {
 
@@ -514,11 +753,6 @@ async function sendToDiscord({
         };
 
 
-        /*
-           Добавляем фотографию,
-           если ссылка указана.
-        */
-
         if (MASHA_PHOTO_URL) {
 
             embed.image = {
@@ -528,25 +762,33 @@ async function sendToDiscord({
         }
 
 
-        await fetch(WEBHOOK_URL, {
+        await fetch(
+            WEBHOOK_URL,
+            {
+                method: "POST",
 
-            method: "POST",
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+                body: JSON.stringify({
 
-            body: JSON.stringify({
+                    username:
+                        "💗 Для Маши",
 
-                username: "💗 Для Маши",
+                    embeds: [
+                        embed
+                    ]
 
-                embeds: [embed]
+                })
 
-            })
+            }
+        );
 
-        });
+    }
 
-    } catch (error) {
+    catch (error) {
 
         console.error(
             "Ошибка Discord Webhook:",
@@ -565,21 +807,32 @@ async function sendToDiscord({
 const stars =
     document.getElementById("stars");
 
-for (let i = 0; i < 100; i++) {
+
+for (
+    let i = 0;
+    i < 100;
+    i++
+) {
 
     const star =
         document.createElement("div");
 
-    star.className = "star";
+
+    star.className =
+        "star";
+
 
     star.style.left =
         Math.random() * 100 + "%";
 
+
     star.style.top =
         Math.random() * 100 + "%";
 
+
     star.style.animationDelay =
         Math.random() * 2 + "s";
+
 
     stars.appendChild(star);
 
@@ -594,11 +847,15 @@ function nextScreen(number) {
 
     document
         .querySelectorAll(".screen")
-        .forEach(screen => {
+        .forEach(
+            screen => {
 
-            screen.classList.remove("active");
+                screen.classList.remove(
+                    "active"
+                );
 
-        });
+            }
+        );
 
 
     const next =
@@ -609,9 +866,14 @@ function nextScreen(number) {
 
     if (next) {
 
-        next.classList.add("active");
+        next.classList.add(
+            "active"
+        );
 
-        window.scrollTo(0, 0);
+        window.scrollTo(
+            0,
+            0
+        );
 
     }
 
@@ -622,42 +884,62 @@ function nextScreen(number) {
    САЙТ ОТКРЫТ
 ===================================================== */
 
-window.addEventListener("load", () => {
+window.addEventListener(
+    "load",
+    () => {
 
-    sendToDiscord({
+        sendToDiscord({
 
-        title: "💌 Сайт открыт",
+            title:
+                "💌 Сайт открыт",
 
-        description:
-            "Маша открыла твою открытку. ❤️",
+            description:
+                "Маша открыла твою открытку. ❤️",
 
-        fields: [
+            fields: [
 
-            {
-                name: "👤 Пользователь",
-                value: "Маша",
-                inline: true
-            },
+                {
+                    name:
+                        "👤 Пользователь",
 
-            {
-                name: "🌐 Событие",
-                value: "Открытие сайта",
-                inline: true
-            },
+                    value:
+                        "Маша",
 
-            {
-                name: "💗 Статус",
-                value: "Открыт",
-                inline: true
-            }
+                    inline:
+                        true
+                },
 
-        ],
+                {
+                    name:
+                        "🌐 Событие",
 
-        color: 16711935
+                    value:
+                        "Открытие сайта",
 
-    });
+                    inline:
+                        true
+                },
 
-});
+                {
+                    name:
+                        "💗 Статус",
+
+                    value:
+                        "Открыт",
+
+                    inline:
+                        true
+                }
+
+            ],
+
+            color:
+                16711935
+
+        });
+
+    }
+);
 
 
 /* =====================================================
@@ -667,32 +949,46 @@ window.addEventListener("load", () => {
 function checkAnswer1() {
 
     const input =
-        document.getElementById("answer1");
+        document.getElementById(
+            "answer1"
+        );
+
 
     const error =
-        document.getElementById("error1");
+        document.getElementById(
+            "error1"
+        );
 
 
     const answer =
         input.value
             .toLowerCase()
             .trim()
-            .replace(/\s+/g, " ");
+            .replace(
+                /\s+/g,
+                " "
+            );
 
 
     const correctAnswers = [
 
         "31",
+
         "31 августа",
+
         "31 августа 2026",
+
         "31 august",
+
         "31 august 2026"
 
     ];
 
 
     if (
-        correctAnswers.includes(answer)
+        correctAnswers.includes(
+            answer
+        )
     ) {
 
         error.textContent = "";
@@ -700,7 +996,8 @@ function checkAnswer1() {
 
         sendToDiscord({
 
-            title: "💗 Правильный ответ",
+            title:
+                "💗 Правильный ответ",
 
             description:
                 "Маша правильно ответила на секретный вопрос. ❤️",
@@ -708,34 +1005,51 @@ function checkAnswer1() {
             fields: [
 
                 {
-                    name: "👤 Пользователь",
-                    value: "Маша",
-                    inline: true
+                    name:
+                        "👤 Пользователь",
+
+                    value:
+                        "Маша",
+
+                    inline:
+                        true
                 },
 
                 {
-                    name: "❓ Ответ",
-                    value: answer,
-                    inline: true
+                    name:
+                        "❓ Ответ",
+
+                    value:
+                        answer,
+
+                    inline:
+                        true
                 },
 
                 {
-                    name: "✅ Статус",
-                    value: "Правильно",
-                    inline: true
+                    name:
+                        "✅ Статус",
+
+                    value:
+                        "Правильно",
+
+                    inline:
+                        true
                 }
 
             ],
 
-            color: 16711935
+            color:
+                16711935
 
         });
 
 
         nextScreen(3);
 
+    }
 
-    } else {
+    else {
 
         error.textContent =
             "Попробуй ещё раз ❤️";
@@ -761,8 +1075,11 @@ function toggleReason(number) {
 
         reasons[number].style.display =
 
-            reasons[number].style.display === "block"
+            reasons[number].style.display ===
+            "block"
+
                 ? "none"
+
                 : "block";
 
     }
@@ -777,7 +1094,9 @@ function toggleReason(number) {
 function chooseRobux(amount) {
 
     document
-        .getElementById("finalText")
+        .getElementById(
+            "finalText"
+        )
         .textContent =
             "Ты выбрала " +
             amount +
@@ -786,7 +1105,8 @@ function chooseRobux(amount) {
 
     sendToDiscord({
 
-        title: "🎁 Выбор Robux",
+        title:
+            "🎁 Выбор Robux",
 
         description:
             "Маша выбрала " +
@@ -796,121 +1116,43 @@ function chooseRobux(amount) {
         fields: [
 
             {
-                name: "👤 Пользователь",
-                value: "Маша",
-                inline: true
+                name:
+                    "👤 Пользователь",
+
+                value:
+                    "Маша",
+
+                inline:
+                    true
             },
 
             {
-                name: "💎 Выбор",
+                name:
+                    "💎 Выбор",
+
                 value:
                     amount +
                     " Robux",
-                inline: true
+
+                inline:
+                    true
             },
 
             {
-                name: "✅ Статус",
-                value: "Выбрано",
-                inline: true
+                name:
+                    "✅ Статус",
+
+                value:
+                    "Выбрано",
+
+                inline:
+                    true
             }
 
         ],
 
-        color: 16711935
-
-    });
-
-
-    nextScreen(8);
-
-    createHearts();
-
-}
-
-
-/* =====================================================
-   СВОЯ ЦИФРА ROBUX
-===================================================== */
-
-function customRobux() {
-
-    nextScreen(7);
-
-}
-
-
-function sendCustom() {
-
-    const input =
-        document.getElementById("custom");
-
-    const error =
-        document.getElementById(
-            "errorCustom"
-        );
-
-
-    const amount =
-        Number(input.value);
-
-
-    if (
-        !amount ||
-        amount < 1
-    ) {
-
-        error.textContent =
-            "Напиши число больше 0 ❤️";
-
-        return;
-
-    }
-
-
-    document
-        .getElementById("finalText")
-        .textContent =
-            "Ты выбрала " +
-            amount +
-            " Robux. ❤️";
-
-
-    error.textContent = "";
-
-
-    sendToDiscord({
-
-        title: "✨ Свой выбор Robux",
-
-        description:
-            "Маша сама указала количество Robux. ❤️",
-
-        fields: [
-
-            {
-                name: "👤 Пользователь",
-                value: "Маша",
-                inline: true
-            },
-
-            {
-                name: "💎 Количество",
-                value:
-                    amount +
-                    " Robux",
-                inline: true
-            },
-
-            {
-                name: "✅ Статус",
-                value: "Принято",
-                inline: true
-            }
-
-        ],
-
-        color: 16711935
+        color:
+            16711935
 
     });
 
@@ -934,48 +1176,55 @@ function createHearts() {
         i++
     ) {
 
-        setTimeout(() => {
+        setTimeout(
+            () => {
 
-            const heart =
-                document.createElement(
-                    "div"
+                const heart =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                heart.className =
+                    "floating-heart";
+
+
+                heart.textContent =
+                    "❤️";
+
+
+                heart.style.left =
+                    Math.random() * 100 +
+                    "%";
+
+
+                heart.style.animationDuration =
+                    (
+                        3 +
+                        Math.random() * 3
+                    ) +
+                    "s";
+
+
+                document
+                    .body
+                    .appendChild(
+                        heart
+                    );
+
+
+                setTimeout(
+                    () => {
+
+                        heart.remove();
+
+                    },
+                    6000
                 );
 
-
-            heart.className =
-                "floating-heart";
-
-
-            heart.textContent =
-                "❤️";
-
-
-            heart.style.left =
-                Math.random() * 100 +
-                "%";
-
-
-            heart.style.animationDuration =
-                (
-                    3 +
-                    Math.random() * 3
-                ) +
-                "s";
-
-
-            document
-                .body
-                .appendChild(heart);
-
-
-            setTimeout(() => {
-
-                heart.remove();
-
-            }, 6000);
-
-
-        }, i * 150);
+            },
+            i * 150
+        );
 
     }
 
@@ -984,4 +1233,4 @@ function createHearts() {
 </script>
 
 </body>
-    </html>
+</html>
