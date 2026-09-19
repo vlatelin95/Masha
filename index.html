@@ -466,8 +466,112 @@ for (let i = 0; i < 100; i++) {
     star.style.animationDelay =
         Math.random() * 2 + "s";
 
-    stars.appendChild(star);
+        stars.appendChild(star);
 }
 
+function nextScreen(number) {
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+    });
 
-/
+    const next = document.getElementById("screen" + number);
+
+    if (next) {
+        next.classList.add("active");
+        window.scrollTo(0, 0);
+    }
+}
+
+function checkAnswer1() {
+    const input = document.getElementById("answer1");
+    const error = document.getElementById("error1");
+
+    const answer = input.value
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, " ");
+
+    const correctAnswers = [
+        "31",
+        "31 августа",
+        "31 августа 2026",
+        "31 august",
+        "31 august 2026"
+    ];
+
+    if (correctAnswers.includes(answer)) {
+        error.textContent = "";
+        nextScreen(3);
+    } else {
+        error.textContent = "Попробуй ещё раз ❤️";
+    }
+}
+
+function toggleReason(number) {
+    const reasons = document.querySelectorAll(".reason-text");
+
+    if (reasons[number]) {
+        reasons[number].style.display =
+            reasons[number].style.display === "block"
+                ? "none"
+                : "block";
+    }
+}
+
+function chooseRobux(amount) {
+    document.getElementById("finalText").textContent =
+        "Ты выбрала " + amount + " Robux. ❤️";
+
+    nextScreen(8);
+    createHearts();
+}
+
+function customRobux() {
+    nextScreen(7);
+}
+
+function sendCustom() {
+    const input = document.getElementById("custom");
+    const error = document.getElementById("errorCustom");
+
+    const amount = Number(input.value);
+
+    if (!amount || amount < 1) {
+        error.textContent = "Напиши число больше 0 ❤️";
+        return;
+    }
+
+    document.getElementById("finalText").textContent =
+        "Ты выбрала " + amount + " Robux. ❤️";
+
+    error.textContent = "";
+
+    nextScreen(8);
+    createHearts();
+}
+
+function createHearts() {
+    for (let i = 0; i < 12; i++) {
+        setTimeout(() => {
+            const heart = document.createElement("div");
+
+            heart.className = "floating-heart";
+            heart.textContent = "❤️";
+
+            heart.style.left = Math.random() * 100 + "%";
+            heart.style.animationDuration =
+                (3 + Math.random() * 3) + "s";
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }, i * 150);
+    }
+}
+
+</script>
+
+</body>
+</html>
