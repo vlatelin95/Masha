@@ -1083,72 +1083,40 @@ function toggleReason(number) {
 ===================================================== */
 
 function chooseRobux(amount) {
+function chooseRobux(amount) {
 
-    document.getElementById(
-        "finalText"
-    ).textContent =
-        "Ты выбрала " +
-        amount +
-        " Robux. ❤️";
-
+    document.getElementById("finalText").textContent =
+        "Ты выбрала " + amount + " Robux. ❤️";
 
     sendToDiscord({
-
-        title:
-            "🎁 Выбор Robux",
-
+        title: "🎁 Выбор Robux",
         description:
-            "Маша выбрала " +
-            amount +
-            " Robux. ❤️",
+            "Маша выбрала " + amount + " Robux. ❤️",
 
         fields: [
-
             {
-                name:
-                    "👤 Пользователь",
-
-                value:
-                    "Маша",
-
-                inline:
-                    true
+                name: "👤 Пользователь",
+                value: "Маша",
+                inline: true
             },
-
             {
-                name:
-                    "💎 Выбор",
-
-                value:
-                    amount +
-                    " Robux",
-
-                inline:
-                    true
+                name: "💎 Выбор",
+                value: amount + " Robux",
+                inline: true
             },
-
             {
-                name:
-                    "✅ Статус",
-
-                value:
-                    "Выбрано",
-
-                inline:
-                    true
+                name: "✅ Статус",
+                value: "Принято",
+                inline: true
             }
-
         ],
 
-                color:
-            16711935
-
+        color: 16711935
     });
 
     nextScreen(8);
     createHearts();
-
-    }
+}
 
 
 /* =====================================================
