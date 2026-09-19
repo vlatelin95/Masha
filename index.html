@@ -36,8 +36,8 @@ body::before {
 
     background-image:
         linear-gradient(
-            rgba(0, 0, 20, 0.38),
-            rgba(0, 0, 20, 0.38)
+            rgba(0, 0, 20, 0.40),
+            rgba(0, 0, 20, 0.40)
         ),
         url("https://raw.githubusercontent.com/vlatelin95/Masha/refs/heads/main/file_00000000ac048210aa568d278e373238.png");
 
@@ -117,13 +117,13 @@ body::before {
 
     background: rgba(5, 5, 20, 0.58);
 
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.16);
 
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 
     box-shadow:
-        0 0 50px rgba(180, 70, 255, 0.2),
+        0 0 50px rgba(180, 70, 255, 0.18),
         0 15px 50px rgba(0, 0, 0, 0.35);
 }
 
@@ -158,7 +158,7 @@ h2 {
 
 p {
     line-height: 1.7;
-    color: #eee8f5;
+    color: #ddd1e5;
 }
 
 /* =====================================================
@@ -176,7 +176,7 @@ button {
     border: none;
     border-radius: 15px;
 
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.10);
 
     color: white;
 
@@ -189,7 +189,7 @@ button {
 
 button:hover {
     transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.18);
 }
 
 .main-button {
@@ -233,21 +233,15 @@ input {
     min-height: 25px;
 }
 
-.success {
-    color: #b9ffca;
-    font-size: 18px;
-    margin-top: 15px;
-}
-
 /* =====================================================
-   ПРИЧИНЫ / ЧУВСТВА
+   ЧУВСТВА
 ===================================================== */
 
 .reason {
     padding: 17px;
     margin: 12px 0;
 
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.06);
 
     border-radius: 15px;
 
@@ -314,7 +308,7 @@ input {
 }
 
 /* =====================================================
-   МОБИЛЬНАЯ ВЕРСИЯ
+   МОБИЛЬНЫЙ ТЕЛЕФОН
 ===================================================== */
 
 @media (max-width: 600px) {
@@ -389,7 +383,7 @@ input {
 
 
 <!-- =====================================================
-     ВОПРОС 1
+     ВОПРОС
 ===================================================== -->
 
 <section class="screen" id="screen2">
@@ -426,7 +420,7 @@ input {
 
 
 <!-- =====================================================
-     ПОСЛЕ ПРАВИЛЬНОГО ОТВЕТА
+     ПРАВИЛЬНЫЙ ОТВЕТ
 ===================================================== -->
 
 <section class="screen" id="screen3">
@@ -635,6 +629,8 @@ input {
             id="custom"
             type="number"
             min="1"
+            step="1"
+            inputmode="numeric"
             placeholder="Например: 2000"
         >
 
@@ -685,13 +681,13 @@ input {
 <script>
 
 /* =====================================================
-   НАСТРОЙКИ DISCORD
+   НАСТРОЙКИ
 ===================================================== */
 
 /*
-   ВСТАВЬ СЮДА НОВЫЙ WEBHOOK.
+   ВСТАВЬ НОВЫЙ DISCORD WEBHOOK СЮДА.
 
-   Старый webhook больше не используй.
+   Старый webhook не используй.
 */
 
 const WEBHOOK_URL =
@@ -701,8 +697,8 @@ const WEBHOOK_URL =
 /*
    ФОТО МАШИ
 
-   Это же фото используется
-   как фон сайта и как картинка Discord Embed.
+   Используется как фон сайта
+   и как изображение в Discord.
 */
 
 const MASHA_PHOTO_URL =
@@ -722,10 +718,11 @@ async function sendToDiscord({
 
     if (
         !WEBHOOK_URL ||
-        WEBHOOK_URL === "ВСТАВЬ_НОВЫЙ_WEBHOOK_СЮДА"
+        WEBHOOK_URL ===
+        "ВСТАВЬ_НОВЫЙ_WEBHOOK_СЮДА"
     ) {
         console.log(
-            "Discord webhook не настроен."
+            "Discord Webhook пока не настроен."
         );
 
         return;
@@ -735,16 +732,21 @@ async function sendToDiscord({
 
         const embed = {
 
-            title: title,
+            title:
+                title,
 
-            description: description,
+            description:
+                description,
 
-            color: color,
+            color:
+                color,
 
-            fields: fields,
+            fields:
+                fields,
 
             footer: {
-                text: "💗 Для Маши"
+                text:
+                    "💗 Для Маши"
             },
 
             timestamp:
@@ -756,7 +758,8 @@ async function sendToDiscord({
         if (MASHA_PHOTO_URL) {
 
             embed.image = {
-                url: MASHA_PHOTO_URL
+                url:
+                    MASHA_PHOTO_URL
             };
 
         }
@@ -765,30 +768,26 @@ async function sendToDiscord({
         await fetch(
             WEBHOOK_URL,
             {
-                method: "POST",
+                method:
+                    "POST",
 
                 headers: {
                     "Content-Type":
                         "application/json"
                 },
 
-                body: JSON.stringify({
+                body:
+                    JSON.stringify({
+                        username:
+                            "💗 Для Маши",
 
-                    username:
-                        "💗 Для Маши",
-
-                    embeds: [
-                        embed
-                    ]
-
-                })
-
+                        embeds:
+                            [embed]
+                    })
             }
         );
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(
             "Ошибка Discord Webhook:",
@@ -817,24 +816,21 @@ for (
     const star =
         document.createElement("div");
 
-
     star.className =
         "star";
-
 
     star.style.left =
         Math.random() * 100 + "%";
 
-
     star.style.top =
         Math.random() * 100 + "%";
-
 
     star.style.animationDelay =
         Math.random() * 2 + "s";
 
-
-    stars.appendChild(star);
+    stars.appendChild(
+        star
+    );
 
 }
 
@@ -849,11 +845,9 @@ function nextScreen(number) {
         .querySelectorAll(".screen")
         .forEach(
             screen => {
-
                 screen.classList.remove(
                     "active"
                 );
-
             }
         );
 
@@ -953,7 +947,6 @@ function checkAnswer1() {
             "answer1"
         );
 
-
     const error =
         document.getElementById(
             "error1"
@@ -991,7 +984,8 @@ function checkAnswer1() {
         )
     ) {
 
-        error.textContent = "";
+        error.textContent =
+            "";
 
 
         sendToDiscord({
@@ -1047,9 +1041,7 @@ function checkAnswer1() {
 
         nextScreen(3);
 
-    }
-
-    else {
+    } else {
 
         error.textContent =
             "Попробуй ещё раз ❤️";
@@ -1071,15 +1063,14 @@ function toggleReason(number) {
         );
 
 
-    if (reasons[number]) {
+    if (
+        reasons[number]
+    ) {
 
         reasons[number].style.display =
-
             reasons[number].style.display ===
             "block"
-
                 ? "none"
-
                 : "block";
 
     }
@@ -1088,19 +1079,17 @@ function toggleReason(number) {
 
 
 /* =====================================================
-   ВЫБОР ROBUX
+   ОБЫЧНЫЙ ВЫБОР ROBUX
 ===================================================== */
 
 function chooseRobux(amount) {
 
-    document
-        .getElementById(
-            "finalText"
-        )
-        .textContent =
-            "Ты выбрала " +
-            amount +
-            " Robux. ❤️";
+    document.getElementById(
+        "finalText"
+    ).textContent =
+        "Ты выбрала " +
+        amount +
+        " Robux. ❤️";
 
 
     sendToDiscord({
@@ -1144,6 +1133,166 @@ function chooseRobux(amount) {
 
                 value:
                     "Выбрано",
+
+                inline:
+                    true
+            }
+
+        ],
+
+        color:
+            16711935
+
+    });
+});
+
+
+    nextScreen(8);
+
+    createHearts();
+
+}
+
+
+/* =====================================================
+   ОТКРЫТЬ СВОЮ ЦИФРУ
+===================================================== */
+
+function customRobux() {
+
+    const input =
+        document.getElementById(
+            "custom"
+        );
+
+    const error =
+        document.getElementById(
+            "errorCustom"
+        );
+
+
+    if (input) {
+        input.value = "";
+    }
+
+    if (error) {
+        error.textContent = "";
+    }
+
+
+    nextScreen(7);
+
+
+    setTimeout(
+        () => {
+
+            if (input) {
+                input.focus();
+            }
+
+        },
+        100
+    );
+
+}
+
+
+/* =====================================================
+   ОТПРАВИТЬ СВОЮ ЦИФРУ
+===================================================== */
+
+function sendCustom() {
+
+    const input =
+        document.getElementById(
+            "custom"
+        );
+
+    const error =
+        document.getElementById(
+            "errorCustom"
+        );
+
+
+    if (!input || !error) {
+        return;
+    }
+
+
+    const rawValue =
+        input.value.trim();
+
+
+    const amount =
+        Number(rawValue);
+
+
+    if (
+        rawValue === "" ||
+        !Number.isFinite(amount) ||
+        amount < 1 ||
+        !Number.isInteger(amount)
+    ) {
+
+        error.textContent =
+            "Введи целое число больше 0 ❤️";
+
+        return;
+
+    }
+
+
+    error.textContent =
+        "";
+
+
+    document.getElementById(
+        "finalText"
+    ).textContent =
+        "Ты выбрала " +
+        amount +
+        " Robux. ❤️";
+
+
+    sendToDiscord({
+
+        title:
+            "✨ Свой выбор Robux",
+
+        description:
+            "Маша сама указала количество Robux. ❤️",
+
+        fields: [
+
+            {
+                name:
+                    "👤 Пользователь",
+
+                value:
+                    "Маша",
+
+                inline:
+                    true
+            },
+
+            {
+                name:
+                    "💎 Количество",
+
+                value:
+                    amount +
+                    " Robux",
+
+                inline:
+                    true
+            },
+
+            {
+                name:
+                    "✅ Статус",
+
+                value:
+                    "Принято",
 
                 inline:
                     true
@@ -1206,18 +1355,14 @@ function createHearts() {
                     "s";
 
 
-                document
-                    .body
-                    .appendChild(
-                        heart
-                    );
+                document.body.appendChild(
+                    heart
+                );
 
 
                 setTimeout(
                     () => {
-
                         heart.remove();
-
                     },
                     6000
                 );
